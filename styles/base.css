@@ -1,0 +1,11 @@
+/* Base reset for the standalone waitlist app. */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #08080b;
+}
+
+* {
+  box-sizing: border-box;
+}

@@ -1,0 +1,14 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# env (example file is committed, real ones never are)
+.env
+.env*.local
+
+# logs / os
+*.log
+.DS_Store

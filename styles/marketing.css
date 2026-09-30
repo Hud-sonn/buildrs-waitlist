@@ -1,0 +1,679 @@
+/* 
+  BuildrsHQ marketing design system.
+  Refined, editorial, technical — inspired by modern dev-tool SaaS.
+*/
+
+.mkt {
+  --bg: #08080b;
+  --bg-elev: #0d0d12;
+  --bg-elev2: #121219;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-2: rgba(255, 255, 255, 0.16);
+  --ink: #eceef1;
+  --ink-2: #a8adba;
+  --ink-3: #686e7c;
+  --teal: #2fd6e6;
+  --teal-soft: rgba(47, 214, 230, 0.1);
+  --amber: #e5b84a;
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.mkt *,
+.mkt *::before,
+.mkt *::after {
+  font-family: inherit;
+}
+
+.mkt ::selection {
+  background: rgba(47, 214, 230, 0.25);
+  color: #fff;
+}
+
+.mkt a {
+  color: inherit;
+}
+
+.mkt-mono,
+.mkt-mono * {
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, 'Cascadia Code', Menlo, Consolas, monospace;
+}
+
+.mkt-eyebrow {
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, 'Cascadia Code', Menlo, Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.mkt-eyebrow .dot {
+  color: var(--teal);
+}
+
+.mkt-eyebrow .dim {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.mkt-h1 {
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  font-size: clamp(42px, 7.5vw, 88px);
+  margin: 0;
+}
+
+.mkt-h1 .accent {
+  color: var(--teal);
+}
+
+.mkt-h2 {
+  font-weight: 620;
+  letter-spacing: -0.028em;
+  line-height: 1.06;
+  font-size: clamp(28px, 4.5vw, 52px);
+  margin: 0;
+}
+
+.mkt-h3 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  font-size: 17px;
+  margin: 0;
+}
+
+.mkt-sub {
+  color: var(--ink-2);
+  font-size: 16px;
+  line-height: 1.62;
+  font-weight: 400;
+}
+
+.mkt-sub .teal {
+  color: var(--teal);
+}
+
+.mkt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 550;
+  color: var(--ink);
+  background: transparent;
+  transition: all 0.16s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.mkt-btn:hover {
+  border-color: rgba(47, 214, 230, 0.55);
+  color: #fff;
+  background: var(--teal-soft);
+}
+
+.mkt-btn-primary {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #04181b;
+}
+
+.mkt-btn-primary:hover {
+  background: #6be7f2;
+  border-color: #6be7f2;
+  color: #04181b;
+}
+
+.mkt-btn-ghost {
+  color: var(--ink-2);
+  border-color: transparent;
+}
+
+.mkt-btn-ghost:hover {
+  border-color: transparent;
+  background: transparent;
+  color: #fff;
+}
+
+.mkt-arrow {
+  font-family: ui-monospace, Menlo, monospace;
+  transition: transform 0.16s ease;
+  display: inline-block;
+}
+
+.mkt-btn:hover .mkt-arrow {
+  transform: translateX(2px);
+}
+
+.mkt-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition: border-color 0.16s ease, background 0.16s ease;
+}
+
+.mkt-card:hover {
+  border-color: rgba(47, 214, 230, 0.45);
+  background: var(--bg-elev2);
+}
+
+.mkt-pill {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.mkt-pill.live {
+  color: var(--teal);
+  border-color: rgba(47, 214, 230, 0.4);
+  background: var(--teal-soft);
+}
+
+.mkt-pill.beta {
+  color: var(--amber);
+  border-color: rgba(229, 184, 74, 0.4);
+  background: rgba(229, 184, 74, 0.08);
+}
+
+.mkt-pill.soon {
+  color: var(--ink-3);
+  border-style: dashed;
+}
+
+/* grid with hairline separators */
+.mkt-grid {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mkt-cell {
+  background: var(--bg-elev);
+  padding: 20px;
+  transition: background 0.16s ease;
+}
+
+.mkt-cell:hover {
+  background: var(--bg-elev2);
+}
+
+.mkt-num {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.mkt-rule {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(47, 214, 230, 0.4),
+    transparent
+  );
+  border: none;
+}
+
+/* terminal panels */
+.mkt-term {
+  background: #0b0b10;
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  overflow: hidden;
+}
+
+.mkt-term-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  background: #0d0d14;
+}
+
+.mkt-term-bar .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #23232c;
+}
+
+.mkt-term-bar .title {
+  margin-left: 8px;
+  color: var(--ink-3);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.mkt-term-body {
+  padding: 14px;
+  color: var(--ink-2);
+}
+
+.mkt-term-body .p {
+  color: var(--teal);
+}
+
+.mkt-term-body .ok {
+  color: var(--teal);
+}
+
+.mkt-term-body .d {
+  color: var(--ink-3);
+}
+
+.mkt-term-body .warn {
+  color: var(--amber);
+}
+
+.mkt-term-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* status dot */
+.mkt-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── editor mock (mirrors /editor) ───────────────────────────── */
+.mkt-ed-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--line);
+  background: #0a0a0f;
+  font-size: 11px;
+  overflow: hidden;
+}
+
+.mkt-ed-tab {
+  padding: 7px 12px 6px;
+  color: var(--ink-3);
+  border-right: 1px solid var(--line);
+  cursor: default;
+  white-space: nowrap;
+}
+
+.mkt-ed-tab.active {
+  color: var(--ink);
+  background: #0b0b10;
+  position: relative;
+  top: 1px;
+  border-bottom: 1px solid #0b0b10;
+}
+
+.mkt-ed-body {
+  display: grid;
+  grid-template-columns: 172px 1fr 54px;
+  min-height: 368px;
+  background: #0b0b10;
+}
+
+.mkt-ed-tree {
+  border-right: 1px solid var(--line);
+  padding: 12px 10px;
+  font-size: 11px;
+  line-height: 1.95;
+  color: var(--ink-2);
+  overflow: hidden;
+  user-select: none;
+}
+
+.mkt-ed-tree .t-dir {
+  color: var(--ink-3);
+}
+
+.mkt-ed-tree .t-file {
+  color: var(--ink-2);
+}
+
+.mkt-ed-tree .t-file.on {
+  color: var(--teal);
+}
+
+.mkt-ed-code {
+  padding: 12px 0;
+  font-size: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.mkt-ed-row {
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  white-space: pre;
+}
+
+.mkt-ed-ln {
+  width: 46px;
+  flex-shrink: 0;
+  text-align: right;
+  padding-right: 14px;
+  color: #3a3f4d;
+  user-select: none;
+}
+
+.mkt-ed-row.active .mkt-ed-ln {
+  color: var(--ink-3);
+}
+
+.mkt-ed-code .tok-kw {
+  color: var(--teal);
+}
+
+.mkt-ed-code .tok-str {
+  color: #34d399;
+}
+
+.mkt-ed-code .tok-fn {
+  color: var(--amber);
+}
+
+.mkt-ed-code .tok-cm {
+  color: var(--ink-3);
+  font-style: italic;
+}
+
+.mkt-ed-code .tok-tp {
+  color: rgba(168, 173, 186, 0.75);
+}
+
+.mkt-ed-code .tok-ghost {
+  color: var(--ink-3);
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.mkt-ed-code .tok-ghost::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 13px;
+  background: var(--teal);
+  margin-left: 2px;
+  vertical-align: -2px;
+  animation: mkt-caret 1.1s step-end infinite;
+}
+
+@keyframes mkt-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+.mkt-ed-minimap {
+  border-left: 1px solid var(--line);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.mkt-ed-minimap i {
+  flex: 1;
+  display: block;
+  min-height: 2px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mkt-ed-minimap i.hl {
+  background: rgba(47, 214, 230, 0.55);
+}
+
+.mkt-ed-minimap i.cursor {
+  background: var(--teal);
+  height: 3px;
+  box-shadow: 0 0 6px rgba(47, 214, 230, 0.8);
+}
+
+.mkt-ed-status {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 7px 12px;
+  background: #0d0d14;
+  border-top: 1px solid var(--line);
+  color: var(--ink-3);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+  flex-wrap: wrap;
+}
+
+.mkt-ed-status .ok {
+  color: var(--teal);
+}
+
+.mkt-presence {
+  position: absolute;
+  left: 60px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.mkt-presence .bar {
+  width: 2px;
+  height: 16px;
+  border-radius: 1px;
+}
+
+.mkt-presence .tag {
+  font-size: 9.5px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 600;
+  color: #04181b;
+}
+
+@media (max-width: 640px) {
+  .mkt-ed-tree,
+  .mkt-ed-minimap {
+    display: none;
+  }
+
+  .mkt-ed-body {
+    grid-template-columns: 1fr;
+  }
+
+  .mkt-ed-status span.mkt-ed-hide-sm {
+    display: none;
+  }
+}
+
+.mkt-live .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 8px var(--teal);
+  animation: mkt-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes mkt-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes mkt-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* hero backdrop */
+.mkt-hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(700px 340px at 24% -10%, rgba(47, 214, 230, 0.1), transparent 60%),
+    radial-gradient(560px 300px at 82% 0%, rgba(47, 214, 230, 0.06), transparent 60%);
+}
+
+.mkt-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(480px 260px at 70% 12%, black, transparent 75%);
+  mask-image: radial-gradient(480px 260px at 70% 12%, black, transparent 75%);
+}
+
+.mkt-link-arrow {
+  color: var(--teal);
+  font-family: ui-monospace, Menlo, monospace;
+}
+
+.mkt-ick {
+  opacity: 0.35;
+}
+
+/* header */
+.mkt-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--line);
+  background: rgba(8, 8, 11, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.mkt-nav-link {
+  position: relative;
+  font-size: 13.5px;
+  color: var(--ink-2);
+  transition: color 0.15s ease;
+}
+
+.mkt-nav-link:hover {
+  color: #fff;
+}
+
+/* table for features */
+.mkt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.mkt-table th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--ink-3);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.mkt-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-2);
+}
+
+.mkt-table tr:hover td {
+  background: var(--bg-elev2);
+}
+
+/* forms */
+.mkt-label {
+  display: block;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 7px;
+}
+
+.mkt-input,
+.mkt-select,
+.mkt-textarea {
+  width: 100%;
+  background: var(--bg-elev);
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: 14px;
+  padding: 11px 14px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  font-family: inherit;
+}
+
+.mkt-input:focus,
+.mkt-select:focus,
+.mkt-textarea:focus {
+  outline: none;
+  border-color: var(--teal);
+  background: var(--bg-elev2);
+}
+
+.mkt-input::placeholder,
+.mkt-textarea::placeholder {
+  color: #4a4f5c;
+}
+
+.mkt-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23686e7c' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 34px;
+}
+
+.mkt-select option {
+  background: var(--bg-elev);
+}
+
+@media (max-width: 640px) {
+  .mkt-h1 {
+    letter-spacing: -0.025em;
+  }
+}
