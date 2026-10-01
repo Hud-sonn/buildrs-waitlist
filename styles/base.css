@@ -9,3 +9,48 @@ body {
 * {
   box-sizing: border-box;
 }
+
+/* Loading shimmer — shown while real waitlist data loads. Deliberately
+   neutral so it can never be mistaken for a real number or avatar. */
+.wl-skel-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid #0d0d12;
+  margin-left: -14px;
+  position: relative;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(255, 255, 255, 0.13) 50%,
+    rgba(255, 255, 255, 0.05) 60%
+  );
+  background-size: 200% 100%;
+  animation: wl-shimmer 1.2s linear infinite;
+}
+
+.wl-skel-circle:first-child {
+  margin-left: 0;
+}
+
+.wl-skel-bar {
+  display: inline-block;
+  width: 56px;
+  height: 18px;
+  border-radius: 6px;
+  vertical-align: -3px;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(255, 255, 255, 0.13) 50%,
+    rgba(255, 255, 255, 0.05) 60%
+  );
+  background-size: 200% 100%;
+  animation: wl-shimmer 1.2s linear infinite;
+}
+
+@keyframes wl-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}

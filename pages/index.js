@@ -7,24 +7,64 @@ import { getRecentJoiners, joinWaitlist, waitlistFetch } from '../lib/api';
 
 const MAIN_SITE_URL = (process.env.NEXT_PUBLIC_MAIN_SITE_URL || 'https://www.buildrshq.dev').replace(/\/$/, '');
 
-const TARGET_LAUNCH_DATE = new Date('2027-01-01T00:00:00');
-// Shown until the live counter responds, then replaced by the real number.
-const FALLBACK_COUNT = 2427;
+// Launch moment — override per deploy via env. Label is the human text shown
+// next to the live countdown.
+const LAUNCH_DATE_ISO = process.env.NEXT_PUBLIC_LAUNCH_DATE || '2027-01-01T00:00:00';
+const LAUNCH_LABEL = process.env.NEXT_PUBLIC_LAUNCH_LABEL || 'Launching Jan 1st, 2027';
+const TARGET_LAUNCH_DATE = new Date(LAUNCH_DATE_ISO);
+const HAS_LAUNCH_DATE = !Number.isNaN(TARGET_LAUNCH_DATE.getTime());
 
-const AVATARS = [
-  'https://i.pravatar.cc/40?img=11',
-  'https://i.pravatar.cc/40?img=5',
-  'https://i.pravatar.cc/40?img=47',
-];
+// Last-known-good waitlist data, so a refresh shows real (stale) numbers
+// instantly instead of flashing mock placeholders before the API responds.
+const COUNT_KEY = 'bw-waitlist-count';
+const MEMBERS_KEY = 'bw-waitlist-members';
+
+const readCache = () => {
+  if (typeof window === 'undefined') return { count: null, members: [] };
+  try {
+    const count = JSON.parse(window.localStorage.getItem(COUNT_KEY));
+    const members = JSON.parse(window.localStorage.getItem(MEMBERS_KEY));
+    return {
+      count: typeof count === 'number' ? count : null,
+      members: Array.isArray(members) ? members.filter((m) => m && m.avatar).slice(0, 5) : [],
+    };
+  } catch {
+    return { count: null, members: [] };
+  }
+};
 
 export default function Waitlist() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
   const [errMsg, setErrMsg] = useState('');
   const [already, setAlready] = useState(false);
+  // Server-safe initial state (empty) so SSR HTML always matches the first
+  // client render — cache hydrates in the mount effect below. This avoids
+  // React hydration mismatch warnings on the footer.
   const [count, setCount] = useState(null);
   const [members, setMembers] = useState([]);
+  const [mounted, setMounted] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  // Client-only: pick up last-known-good data so refresh shows real numbers
+  // instantly instead of skeletons.
+  useEffect(() => {
+    const cached = readCache();
+    if (typeof cached.count === 'number') setCount(cached.count);
+    if (cached.members.length > 0) setMembers(cached.members);
+    setMounted(true);
+  }, []);
+
+  // Persist every update so the next visit starts from real data.
+  useEffect(() => {
+    try {
+      if (typeof count === 'number') window.localStorage.setItem(COUNT_KEY, JSON.stringify(count));
+      window.localStorage.setItem(MEMBERS_KEY, JSON.stringify(members.slice(0, 5)));
+    } catch {
+      // storage unavailable (private mode) — page still works, just refetches
+    }
+  }, [count, members]);
 
   useEffect(() => {
     let cancelled = false;
@@ -35,18 +75,21 @@ export default function Waitlist() {
         if (cancelled) return;
         if (typeof data?.count === 'number') setCount(data.count);
         if (Array.isArray(data?.members)) setMembers(data.members);
+        setLoaded(true);
       })
       .catch(() =>
         waitlistFetch('/api/waitlist/count')
           .then((data) => {
             if (!cancelled && typeof data?.count === 'number') setCount(data.count);
           })
-          .catch(() => { /* keep the fallback number */ })
+          .catch(() => { /* offline with no cache — skeleton stays */ })
+          .finally(() => { if (!cancelled) setLoaded(true); })
       );
     return () => { cancelled = true; };
   }, []);
 
   useEffect(() => {
+    if (!HAS_LAUNCH_DATE) return undefined;
     const tick = () => {
       const diff = TARGET_LAUNCH_DATE.getTime() - Date.now();
       if (diff > 0) {
@@ -182,12 +225,16 @@ export default function Waitlist() {
                   background: 'rgba(255,255,255,0.04)',
                 }} className="wl-pill">
                   <span className="mkt-mono wl-pill-label" style={{ fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#a8adba' }}>
-                    Launching Jan 1st, 2027
+                    {LAUNCH_LABEL}
                   </span>
+                  {HAS_LAUNCH_DATE && (
+                  <>
                   <span className="wl-pill-sep" style={{ width: '1px', height: '12px', background: 'rgba(255,255,255,0.15)' }} />
                   <span className="mkt-num" style={{ fontSize: '11px', color: '#2fd6e6', letterSpacing: '0.04em', fontWeight: 600 }}>
                     {timeLeft.days}d {pad(timeLeft.hours)}h {pad(timeLeft.minutes)}m {pad(timeLeft.seconds)}s
                   </span>
+                  </>
+                  )}
                 </div>
               </div>
 
@@ -221,12 +268,16 @@ export default function Waitlist() {
                   background: 'rgba(255,255,255,0.04)',
                 }} className="wl-pill">
                   <span className="mkt-mono wl-pill-label" style={{ fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#a8adba' }}>
-                    Launching Jan 1st, 2027
+                    {LAUNCH_LABEL}
                   </span>
+                  {HAS_LAUNCH_DATE && (
+                  <>
                   <span className="wl-pill-sep" style={{ width: '1px', height: '12px', background: 'rgba(255,255,255,0.15)' }} />
                   <span className="mkt-num" style={{ fontSize: '11px', color: '#2fd6e6', letterSpacing: '0.04em', fontWeight: 600 }}>
                     {timeLeft.days}d {pad(timeLeft.hours)}h {pad(timeLeft.minutes)}m {pad(timeLeft.seconds)}s
                   </span>
+                  </>
+                  )}
                 </div>
               </div>
 
@@ -289,30 +340,40 @@ export default function Waitlist() {
         position: 'relative',
         zIndex: 1,
       }}>
-        {/* Avatar stack — live joiners when loaded, placeholders until then */}
+        {/* Avatar stack — real joiners once mounted; shimmer before that */}
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          {(members.length > 0
-            ? members.map((m) => ({ src: m.avatar, label: m.name || m.maskedEmail }))
-            : AVATARS.map((src) => ({ src, label: 'member' }))
-          ).map((a, i) => (
+          {mounted && members.map((m, i) => (
             <img
-              key={`${a.src}-${i}`}
-              src={a.src}
-              alt={a.label}
-              title={a.label}
+              key={`${m.avatar}-${i}`}
+              src={m.avatar}
+              alt={m.name || m.maskedEmail}
+              title={m.name || m.maskedEmail}
               style={{
                 width: '44px', height: '44px', borderRadius: '50%',
                 border: '3px solid #0d0d12',
                 marginLeft: i === 0 ? 0 : '-14px',
                 objectFit: 'cover',
                 position: 'relative',
-                zIndex: AVATARS.length - i,
+                zIndex: 5 - i,
               }}
             />
           ))}
+          {(!mounted || (!loaded && members.length === 0)) && (
+            [0, 1, 2, 3, 4].map((i) => (
+              <span key={i} className="wl-skel-circle" style={{ zIndex: 5 - i }} />
+            ))
+          )}
         </div>
         <p style={{ fontSize: '16px', color: '#a8adba', margin: 0, letterSpacing: '-0.01em' }}>
-          <span style={{ color: '#eceef1', fontWeight: 600 }}>{(count ?? FALLBACK_COUNT).toLocaleString()}</span> have already joined
+          {!mounted ? (
+            <span className="wl-skel-bar" aria-label="Loading" />
+          ) : typeof count === 'number' ? (
+            <><span style={{ color: '#eceef1', fontWeight: 600 }}>{count.toLocaleString()}</span> have already joined</>
+          ) : loaded ? (
+            <span style={{ color: '#686e7c' }}>You're early — be the first to join</span>
+          ) : (
+            <span className="wl-skel-bar" aria-label="Loading" />
+          )}
         </p>
       </footer>
     </div>
