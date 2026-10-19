@@ -282,14 +282,14 @@ export default function Waitlist() {
               </div>
 
               {/* Video demo */}
-              <div style={{ width: '100%', maxWidth: '640px', margin: '0 auto 24px auto', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(0,0,0,0.2)' }}>
+              <div style={{ width: '100%', maxWidth: '400px', margin: '0 auto 24px auto', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(0,0,0,0.2)' }}>
                 <iframe
-                  src="https://www.youtube.com/embed/r9rZf1pErBE"
+                  src="https://www.youtube.com/embed/LCENliHRYCo"
                   title="Buildrs demo video"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
-                  style={{ width: '100%', height: 'auto', aspectRatio: '16/9', display: 'block' }}
+                  style={{ width: '100%', height: 'auto', aspectRatio: '9/16', display: 'block' }}
                 />
               </div>
 
