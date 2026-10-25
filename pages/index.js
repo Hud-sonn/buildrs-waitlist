@@ -259,27 +259,6 @@ export default function Waitlist() {
             </motion.div>
           ) : (
             <>
-              {/* Launch date pill with live countdown */}
-              <div style={{ marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '10px',
-                  padding: '8px 20px', borderRadius: '999px',
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  background: 'rgba(255,255,255,0.04)',
-                }} className="wl-pill">
-                  <span className="mkt-mono wl-pill-label" style={{ fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#a8adba' }}>
-                    {LAUNCH_LABEL}
-                  </span>
-                  {HAS_LAUNCH_DATE && (
-                  <>
-                  <span className="wl-pill-sep" style={{ width: '1px', height: '12px', background: 'rgba(255,255,255,0.15)' }} />
-                  <span className="mkt-num" style={{ fontSize: '11px', color: '#2fd6e6', letterSpacing: '0.04em', fontWeight: 600 }}>
-                    {timeLeft.days}d {pad(timeLeft.hours)}h {pad(timeLeft.minutes)}m {pad(timeLeft.seconds)}s
-                  </span>
-                  </>
-                  )}
-                </div>
-              </div>
 
               {/* Video demo */}
               <div style={{ width: '100%', maxWidth: '400px', margin: '0 auto 24px auto', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(0,0,0,0.2)' }}>
